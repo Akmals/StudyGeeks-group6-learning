@@ -1,4 +1,4 @@
-# Flashcard_group6
+# Flashcard_Group6
 FlashCard Application Study Tool
 
 TeamName: StudyGeeks
@@ -10,5 +10,10 @@ Goal: Create a Flash Card application as a study tool for students
     - Randomizing of Flash Cards (Reset/Shuffle/Organize)
     - Quiz/Test Taking (Multiple Choice / Short Answer/ True-False
     - Mark for Review
-      
+
+## Installation
+   - Fork Repo in your own Repository
+   - clone repo
+       - git clone https://github.com/(Your UserName)/(Change to Repo Name)
+   - Find/Move Cloned Repo Folder to Desired location
 
