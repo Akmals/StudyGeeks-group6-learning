@@ -14,6 +14,6 @@ Goal: Create a Flash Card application as a study tool for students
 ## Installation
    - Fork Repo in your own Repository
    - clone repo
-       - git clone https://github.com/(Your UserName)/(Change to Repo Name)
+       - ` git clone https://github.com/(Your_User_Name)/(Repo_Name) `
    - Find/Move Cloned Repo Folder to Desired location
 
