@@ -21,6 +21,9 @@ import sqlite3
 import random
 import os
 
+import Flashcard
+import FlashcardDeck
+
 DB_PATH = "flashcards.db"
 
 
