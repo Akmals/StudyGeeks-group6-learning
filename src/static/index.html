@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="StudyGeeks — A modern flashcard study tool for students. Create decks, add cards, and quiz yourself." />
+  <title>StudyGeeks — Flashcard Study Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════ TOP NAV ═══════════════════════ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <button id="nav-logo" class="logo" onclick="router.go('dashboard')">
+        <span class="logo-icon">SG</span>
+        <span class="logo-text">StudyGeeks</span>
+      </button>
+      <span class="nav-tagline">Flashcard Study Tool</span>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════ DASHBOARD ═══════════════════════ -->
+  <section id="view-dashboard" class="view active">
+    <header class="view-header">
+      <div>
+        <h1>Your Decks</h1>
+        <p class="subtitle">Pick a deck to start studying</p>
+      </div>
+      <button id="btn-new-deck" class="btn btn-primary" onclick="ui.showNewDeckModal()">
+        <span>+</span> New Deck
+      </button>
+    </header>
+
+    <div id="deck-grid" class="deck-grid">
+      <!-- JS fills this -->
+    </div>
+
+    <!-- empty state -->
+    <div id="empty-state" class="empty-state hidden">
+      <div class="empty-icon">--</div>
+      <h2>No decks yet</h2>
+      <p>Create your first deck to get started!</p>
+      <button class="btn btn-primary" onclick="ui.showNewDeckModal()">+ Create a Deck</button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ DECK DETAIL ═══════════════════════ -->
+  <section id="view-deck" class="view">
+    <header class="view-header">
+      <div>
+        <button class="btn-back" onclick="router.go('dashboard')">&lt;- Back</button>
+        <h1 id="deck-title"></h1>
+        <p class="subtitle" id="deck-subject"></p>
+      </div>
+      <div class="header-actions">
+        <button id="btn-study" class="btn btn-accent" onclick="study.start()">
+          Study Now
+        </button>
+        <button id="btn-delete-deck" class="btn btn-danger-outline" onclick="ui.confirmDeleteDeck()">
+          Delete Deck
+        </button>
+      </div>
+    </header>
+
+    <!-- add card form -->
+    <div class="add-card-form glass-panel">
+      <h3>Add a New Card</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="input-question">Question</label>
+          <textarea id="input-question" rows="2" placeholder="Enter the question..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="input-answer">Answer</label>
+          <textarea id="input-answer" rows="2" placeholder="Enter the answer..."></textarea>
+        </div>
+      </div>
+      <button id="btn-add-card" class="btn btn-primary" onclick="ui.addCard()">+ Add Card</button>
+    </div>
+
+    <div id="card-list" class="card-list">
+      <!-- JS fills this -->
+    </div>
+
+    <div id="cards-empty" class="empty-state hidden">
+      <div class="empty-icon">--</div>
+      <h2>No cards in this deck</h2>
+      <p>Add some flashcards above to start studying!</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ STUDY MODE ═══════════════════════ -->
+  <section id="view-study" class="view">
+    <header class="view-header study-header">
+      <button class="btn-back" onclick="study.quit()">X Quit</button>
+      <div class="study-progress-info">
+        <span id="study-counter">Card 1 of 10</span>
+      </div>
+    </header>
+
+    <div class="progress-bar-container">
+      <div id="study-progress-bar" class="progress-bar-fill"></div>
+    </div>
+
+    <!-- The flip card -->
+    <div id="study-card-wrapper" class="study-card-wrapper" onclick="study.flip()">
+      <div id="study-card" class="study-card">
+        <div class="study-card-face study-card-front">
+          <span class="card-label">QUESTION</span>
+          <p id="study-question"></p>
+        </div>
+        <div class="study-card-face study-card-back">
+          <span class="card-label">ANSWER</span>
+          <p id="study-answer"></p>
+        </div>
+      </div>
+    </div>
+
+    <p id="study-flip-hint" class="flip-hint">Click the card or press Space to flip</p>
+
+    <div id="study-grade-btns" class="grade-buttons hidden">
+      <button class="btn btn-know" onclick="study.grade(true)">
+        <span class="grade-icon">Y</span> Know It
+      </button>
+      <button class="btn btn-learning" onclick="study.grade(false)">
+        <span class="grade-icon">N</span> Still Learning
+      </button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ RESULTS ═══════════════════════ -->
+  <section id="view-results" class="view">
+    <div class="results-container glass-panel">
+      <h1>Quiz Complete!</h1>
+      <div id="results-deck-name" class="results-deck-name"></div>
+
+      <div class="score-ring-wrapper">
+        <svg class="score-ring" viewBox="0 0 120 120">
+          <circle class="score-ring-bg" cx="60" cy="60" r="52" />
+          <circle id="score-ring-fill" class="score-ring-fill" cx="60" cy="60" r="52" />
+        </svg>
+        <div class="score-ring-text">
+          <span id="score-pct" class="score-pct">0%</span>
+        </div>
+      </div>
+
+      <div class="results-stats">
+        <div class="stat correct">
+          <span class="stat-num" id="res-correct">0</span>
+          <span class="stat-label">Correct</span>
+        </div>
+        <div class="stat incorrect">
+          <span class="stat-num" id="res-incorrect">0</span>
+          <span class="stat-label">Still Learning</span>
+        </div>
+        <div class="stat total">
+          <span class="stat-num" id="res-total">0</span>
+          <span class="stat-label">Total Cards</span>
+        </div>
+      </div>
+
+      <p id="results-message" class="results-message"></p>
+
+      <div class="results-actions">
+        <button class="btn btn-accent" onclick="study.start()">Study Again</button>
+        <button class="btn btn-secondary" onclick="router.go('dashboard')">&lt;- Dashboard</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ NEW DECK MODAL ═══════════════════════ -->
+  <div id="modal-overlay" class="modal-overlay hidden" onclick="ui.closeModal()">
+    <div class="modal glass-panel" onclick="event.stopPropagation()">
+      <h2>Create New Deck</h2>
+      <div class="form-group">
+        <label for="modal-deck-name">Deck Name</label>
+        <input type="text" id="modal-deck-name" placeholder="e.g. Biology Chapter 5" />
+      </div>
+      <div class="form-group">
+        <label for="modal-deck-subject">Subject <span class="optional">(optional)</span></label>
+        <input type="text" id="modal-deck-subject" placeholder="e.g. Biology" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="ui.closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="ui.createDeck()">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ EDIT CARD MODAL ═══════════════════════ -->
+  <div id="edit-modal-overlay" class="modal-overlay hidden" onclick="ui.closeEditModal()">
+    <div class="modal glass-panel" onclick="event.stopPropagation()">
+      <h2>Edit Card</h2>
+      <div class="form-group">
+        <label for="edit-question">Question</label>
+        <textarea id="edit-question" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="edit-answer">Answer</label>
+        <textarea id="edit-answer" rows="3"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="ui.closeEditModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="ui.saveEditCard()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════ TOAST ═══════════════════════ -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

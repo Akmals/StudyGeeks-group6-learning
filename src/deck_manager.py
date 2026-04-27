@@ -40,7 +40,7 @@ def create_deck_flow():
     clear()
     print("\n")
     divider("═")
-    print("  📝  Create a New Deck")
+    print("  Create a New Deck")
     divider("═")
 
     name = input("\n  Deck name: ").strip()
@@ -102,7 +102,7 @@ def manage_decks_flow():
         clear()
         print("\n")
         divider("═")
-        print("  📚  Your Decks")
+        print("  Your Decks")
         divider("═")
 
         decks = db.get_all_decks()
@@ -150,7 +150,7 @@ def deck_detail(deck_id):
         print("\n")
         divider("═")
         subject_label = f" ({deck['subject']})" if deck.get("subject") else ""
-        print(f"  📚  {deck['name']}{subject_label}")
+        print(f"  {deck['name']}{subject_label}")
         divider("═")
 
         if cards:
@@ -165,11 +165,11 @@ def deck_detail(deck_id):
             divider()
 
         print()
-        print("  1.  ➕  Add cards")
-        print("  2.  ✏️   Edit a card")
-        print("  3.  🗑️   Delete a card")
-        print("  4.  💣  Delete this entire deck")
-        print("  5.  🔙  Back to deck list")
+        print("  1.  Add cards")
+        print("  2.  Edit a card")
+        print("  3.  Delete a card")
+        print("  4.  Delete this entire deck")
+        print("  5.  Back to deck list")
         print()
 
         action = input("  Choose an action (1-5): ").strip()

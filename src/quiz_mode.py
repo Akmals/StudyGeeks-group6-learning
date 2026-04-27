@@ -17,7 +17,7 @@ Database:
 import random
 import os
 
-import db  # ← Akmal's database helper module
+import db  # Akmal's database helper module
 
 
 # ─────────────────────────────────────────────
@@ -47,7 +47,7 @@ def pick_deck(decks):
     decks is a list of dicts with keys: id, name, subject.
     Returns None if user quits.
     """
-    print("\n  📚  Available Decks\n")
+    print("\n  Available Decks\n")
     divider()
     for i, deck in enumerate(decks, start=1):
         subject_label = f"({deck['subject']})" if deck.get("subject") else ""
@@ -78,7 +78,7 @@ def run_quiz(deck_id, deck_name, cards):
     for i, card in enumerate(cards, start=1):
         card_id, question, answer = card["id"], card["question"], card["answer"]
         clear()
-        print(f"\n  🃏  {deck_name}  |  Card {i} of {total}\n")
+        print(f"\n  {deck_name}  |  Card {i} of {total}\n")
         divider()
         print(f"\n  Q: {question}\n")
         divider()
@@ -86,7 +86,7 @@ def run_quiz(deck_id, deck_name, cards):
         input("  Press Enter to reveal the answer...")
 
         clear()
-        print(f"\n  🃏  {deck_name}  |  Card {i} of {total}\n")
+        print(f"\n  {deck_name}  |  Card {i} of {total}\n")
         divider()
         print(f"\n  Q: {question}\n")
         divider()
@@ -94,8 +94,8 @@ def run_quiz(deck_id, deck_name, cards):
         divider()
 
         print("\n  Did you get it right?")
-        print("  1. Yes, I knew it  ✓")
-        print("  2. Not quite, still learning  ✗\n")
+        print("  1. Yes, I knew it")
+        print("  2. Not quite, still learning\n")
 
         while True:
             grade = input("  Enter 1 or 2: ").strip()
@@ -122,20 +122,20 @@ def show_summary(deck_name, total, correct, incorrect):
 
     print("\n")
     divider("═")
-    print(f"  📊  Quiz Complete: {deck_name}")
+    print(f"  Quiz Complete: {deck_name}")
     divider("═")
     print(f"\n  Total Cards:      {total}")
-    print(f"  Knew It:          {correct}  ✓")
-    print(f"  Still Learning:   {incorrect}  ✗")
+    print(f"  Knew It:          {correct}")
+    print(f"  Still Learning:   {incorrect}")
     print(f"  Score:            {pct}%")
     divider()
 
     if pct == 100:
-        print("\n  Perfect score! You've mastered this deck. 🏆")
+        print("\n  Perfect score! You’ve mastered this deck.")
     elif pct >= 70:
-        print("\n  Great job! A little more review and you'll have it. 💪")
+        print("\n  Great job! A little more review and you'll have it.")
     else:
-        print("\n  Keep going -- repetition is how it sticks. 📖")
+        print("\n  Keep going -- repetition is how it sticks.")
 
     print()
     divider("═")
@@ -150,7 +150,7 @@ def main():
     clear()
     print("\n")
     divider("═")
-    print("  🎴  Flashcard Learning App -- Quiz Mode")
+    print("  Flashcard Learning App -- Quiz Mode")
     divider("═")
 
     while True:
