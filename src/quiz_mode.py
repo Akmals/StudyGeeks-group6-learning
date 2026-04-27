@@ -147,9 +147,6 @@ def show_summary(deck_name, total, correct, incorrect):
 # ─────────────────────────────────────────────
 
 def main():
-    db.init()               # Create tables if needed
-    db.seed_sample_data()   # Load sample data (skips if already seeded)
-
     clear()
     print("\n")
     divider("═")
@@ -161,11 +158,11 @@ def main():
 
         if not decks:
             print("\n  No decks found. Add some cards first!")
+            prompt_enter()
             break
 
         result = pick_deck(decks)
         if result is None:
-            print("\n  Goodbye! Keep studying. 👋\n")
             break
 
         deck_id, deck_name = result
@@ -183,11 +180,10 @@ def main():
         show_summary(deck_name, total, correct, incorrect)
 
         print("  1. Quiz another deck")
-        print("  2. Quit\n")
+        print("  2. Back to main menu\n")
 
         again = input("  Enter 1 or 2: ").strip()
         if again != "1":
-            print("\n  Goodbye! Keep studying. 👋\n")
             break
 
 
